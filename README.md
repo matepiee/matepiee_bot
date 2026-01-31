@@ -44,8 +44,7 @@ A bot futtatásához szükségesek a következők:
     ```bash
     node src/index.js
     ```
-
-    ## ⚙️ Konfiguráció (.env minta)
+## ⚙️ Konfiguráció (.env minta)
 
 Hozz létre egy `.env` fájlt, és töltsd ki az alábbi adatokkal.
 **Fontos:** A `.env` fájlt soha ne töltsd fel GitHubra! A lenti értékek csak helyőrzők, cseréld ki őket a sajátjaidra!
@@ -90,42 +89,32 @@ TIKTOK_USERNAME=matepiee.ttv
 TWITCH_CLIENT_ID=IDE_A_TWITCH_CLIENT_ID
 TWITCH_CLIENT_SECRET=IDE_A_TWITCH_SECRET_TOKEN
 TWITCH_CHANNEL_NAME=matepiee
+## 🎮 Parancsok
 
-🎮 Parancsok
-🎵 Zene (Prefix: !)
-!play <cím vagy link> - Zene indítása.
+### 🎵 Zene (Prefix: `!`)
+* `!play <cím vagy link>` - Zene indítása.
+* `!skip` - Zene átugrása.
+* `!stop` - Zene leállítása és kilépés.
 
-!skip - Zene átugrása.
+### 🛡️ Admin / Mod (Slash Command: `/` és Prefix `!`)
+* `/ban <user> [indok]` - Kitiltás.
+* `/kick <user> [indok]` - Kirúgás.
+* `/timeout <user> <perc> [indok]` - Némítás.
+* `/purge <mennyiség>` vagy `!purge <mennyiség>` - Üzenetek tömeges törlése.
+* `/voice_mute`, `/voice_kick`, stb. - Hangcsatorna moderáció.
+* `/embed` - Egyedi embed üzenet készítő.
 
-!stop - Zene leállítása és kilépés.
+### 🌐 Egyéb
+* `/website` vagy `!website` - Weboldal linkje.
+* `/matepiee_yt`, `/matepiee_tt`, `/matepiee_twitch` - Értesítések tesztelése (Admin).
 
-🛡️ Admin / Mod (Slash Command: / és Prefix !)
-/ban <user> [indok] - Kitiltás.
+## 📁 Mappaszerkezet
 
-/kick <user> [indok] - Kirúgás.
+* `src/index.js` - A bot fő belépési pontja.
+* `src/events/` - Eseménykezelők (MessageCreate, InteractionCreate, stb.).
+* `src/commands/` - Parancs definíciók.
+* `src/services/` - Zenelejátszó, Logger és Értesítő modulok.
+* `src/deploy-commands.js` - Slash commandok regisztráló szkriptje.
 
-/timeout <user> <perc> [indok] - Némítás.
-
-/purge <mennyiség> vagy !purge <mennyiség> - Üzenetek tömeges törlése.
-
-/voice_mute, /voice_kick, stb. - Hangcsatorna moderáció.
-
-/embed - Egyedi embed üzenet készítő.
-
-🌐 Egyéb
-/website vagy !website - Weboldal linkje.
-
-/matepiee_yt, /matepiee_tt, /matepiee_twitch - Értesítések tesztelése (Admin).
-
-📁 Mappaszerkezet
-src/index.js - A bot fő belépési pontja.
-
-src/events/ - Eseménykezelők (MessageCreate, InteractionCreate, stb.).
-
-src/commands/ - Parancs definíciók.
-
-src/services/ - Zenelejátszó, Logger és Értesítő modulok.
-
-src/deploy-commands.js - Slash commandok regisztráló szkriptje.
-
-Készítette: Matepiee
+---
+**Készítette:** Matepiee
