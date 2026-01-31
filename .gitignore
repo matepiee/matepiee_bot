@@ -1,0 +1,30 @@
+# --- FÜGGŐSÉGEK (Ezeket le tudja tölteni más is az npm install-lal) ---
+node_modules/
+
+# --- TITKOS ADATOK (SOHA NE TÖLTSD FEL!) ---
+.env
+.env.local
+.env.*
+
+# --- SÜTIK (A zenelejátszóhoz használtuk) ---
+cookies.txt
+cookies.json
+
+# --- LOG FÁJLOK ---
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# --- KÉPEK ÉS FÁJLOK, AMIT KÉRTÉL ---
+pfp.jpg
+welcome.jpg
+
+# --- OPERÁCIÓS RENDSZER SZEMÉT ---
+.DS_Store
+Thumbs.db
+
+# --- EGYÉB SZERKESZTŐ BEÁLLÍTÁSOK ---
+.vscode/
+.idea/
