@@ -1,7 +1,3 @@
-Rendben, itt a README.md első fele. Ez tartalmazza a leírást, a funkciókat és a telepítési útmutatót.
-
-📄 README.md (1. rész)
-Markdown
 # 🤖 Matepiee Discord Bot
 
 Ez egy egyedi fejlesztésű, többfunkciós Discord bot, amelyet a **Matepiee** közösség számára készítettek. A bot képes zenelejátszásra, adminisztrációs feladatokra, közösségi média értesítésekre (YouTube, Twitch, TikTok), valamint interaktív funkciók (Reaction Roles, Embed készítő) kezelésére.
