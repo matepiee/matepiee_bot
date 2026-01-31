@@ -49,7 +49,7 @@ A bot futtatásához szükségesek a következők:
 Hozz létre egy `.env` fájlt, és töltsd ki az alábbi adatokkal.
 **Fontos:** A `.env` fájlt soha ne töltsd fel GitHubra! A lenti értékek csak helyőrzők, cseréld ki őket a sajátjaidra!
 
-```env
+## env
 # --- DISCORD ALAPBEÁLLÍTÁSOK ---
 DISCORD_TOKEN=IDE_ÍRD_A_DISCORD_BOT_TOKENEDET
 CLIENT_ID=IDE_A_BOT_APPLICATION_ID_JE
