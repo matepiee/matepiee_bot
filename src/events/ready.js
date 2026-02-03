@@ -1,6 +1,5 @@
 import { ActivityType } from "discord.js";
 import { checkYoutube } from "../services/youtubeNotifier.js";
-import { checkTiktok } from "../services/tiktokNotifier.js";
 import { checkTwitch } from "../services/twitchNotifier.js";
 import { Logger } from "../services/logger.js";
 
@@ -68,8 +67,6 @@ export default {
     }, 5000);
     checkYoutube(client);
     setInterval(() => checkYoutube(client), 600000);
-    checkTiktok(client);
-    setInterval(() => checkTiktok(client), 3600000);
     checkTwitch(client);
     setInterval(() => checkTwitch(client), 60000);
   },

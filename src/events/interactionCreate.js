@@ -1,5 +1,4 @@
 import { checkYoutube } from "../services/youtubeNotifier.js";
-import { checkTiktok } from "../services/tiktokNotifier.js";
 import { checkTwitch } from "../services/twitchNotifier.js";
 import { Logger } from "../services/logger.js";
 import { EmbedBuilder } from "discord.js";
@@ -7,13 +6,11 @@ import { EmbedBuilder } from "discord.js";
 export default {
   name: "interactionCreate",
   async execute(interaction) {
-    // Ha nem parancs, nem foglalkozunk vele
     if (!interaction.isCommand()) return;
 
     const { commandName, options, member, guild } = interaction;
 
     try {
-      // --- 1. KÖZÖSSÉGI MÉDIA TESZTEK (CSAK ADMIN) ---
       if (commandName === "matepiee_yt") {
         if (!member.permissions.has("Administrator"))
           return interaction.reply({
@@ -22,14 +19,6 @@ export default {
           });
         await interaction.reply("YouTube teszt...");
         await checkYoutube(interaction.client, true);
-      } else if (commandName === "matepiee_tt") {
-        if (!member.permissions.has("Administrator"))
-          return interaction.reply({
-            content: "Nincs jogod ehhez!",
-            ephemeral: true,
-          });
-        await interaction.reply("TikTok teszt...");
-        await checkTiktok(interaction.client, true);
       } else if (commandName === "matepiee_twitch") {
         if (!member.permissions.has("Administrator"))
           return interaction.reply({
@@ -38,22 +27,15 @@ export default {
           });
         await interaction.reply("Twitch teszt...");
         await checkTwitch(interaction.client, true);
-      }
-
-      // --- 2. WEBOLDAL ---
-      else if (commandName === "website") {
+      } else if (commandName === "website") {
         await interaction.reply("**Website** 🌐:\nhttps://matepiee.eu/");
-      }
-
-      // --- 3. EMBED KÉSZÍTŐ (ADMIN) ---
-      else if (commandName === "embed") {
+      } else if (commandName === "embed") {
         if (!member.permissions.has("Administrator")) {
           return interaction.reply({
             content: "⛔ Ezt a parancsot csak adminisztrátorok használhatják!",
             ephemeral: true,
           });
         }
-
         const title = options.getString("title");
         const description = options.getString("description");
         const image = options.getString("image");
@@ -62,8 +44,6 @@ export default {
         let colorInput = options.getString("color");
         const targetChannel =
           options.getChannel("channel") || interaction.channel;
-
-        // Színkód ellenőrzés
         let embedColor = "#0099ff";
         const hexRegex = /^#[0-9A-F]{6}$/i;
 
@@ -110,11 +90,7 @@ export default {
             });
           }
         }
-      }
-
-      // --- 4. PURGE / ÜZENET TÖRLÉS (ÚJ!) ---
-      else if (commandName === "purge") {
-        // Jogosultság: ManageMessages VAGY Administrator
+      } else if (commandName === "purge") {
         if (
           !member.permissions.has("ManageMessages") &&
           !member.permissions.has("Administrator")
@@ -128,7 +104,6 @@ export default {
         const amount = options.getInteger("mennyiseg");
 
         try {
-          // A 'true' paraméter miatt nem dob hibát a 14 napnál régebbi üzenetekre, csak kihagyja őket
           const deleted = await interaction.channel.bulkDelete(amount, true);
           await interaction.reply({
             content: `🧹 Sikeresen törölve **${deleted.size}** üzenet!`,
@@ -141,10 +116,7 @@ export default {
             ephemeral: true,
           });
         }
-      }
-
-      // --- 5. MODERÁCIÓS PARANCSOK ---
-      else {
+      } else {
         const modCommands = [
           "ban",
           "unban",
@@ -157,12 +129,10 @@ export default {
           "voice_undeafen",
           "voice_kick",
         ];
-
         if (modCommands.includes(commandName)) {
           const modRoleId = process.env.MODERATOR_ROLE_ID;
           const hasModRole = member.roles.cache.has(modRoleId);
           const isAdmin = member.permissions.has("Administrator");
-
           if (!isAdmin && !hasModRole) {
             return interaction.reply({
               content: "⛔ Nincs jogosultságod a parancs használatához!",
@@ -175,16 +145,12 @@ export default {
             .fetch(targetUser.id)
             .catch(() => null);
           const reason = options.getString("reason") || "Nincs megadva indok";
-
-          // Unbannál nem kell, hogy bent legyen a member, minden másnál igen
           if (!targetMember && commandName !== "unban") {
             return interaction.reply({
               content: "❌ Nem találom ezt a felhasználót a szerveren.",
               ephemeral: true,
             });
           }
-
-          // Rangsor ellenőrzés (ha bent van a user)
           if (
             targetMember &&
             targetMember.roles.highest.position >=
@@ -197,8 +163,6 @@ export default {
               ephemeral: true,
             });
           }
-
-          // --- BAN ---
           if (commandName === "ban") {
             if (!targetMember.bannable)
               return interaction.reply({
@@ -216,9 +180,7 @@ export default {
               `🚫 **BAN**\n**Kit:** ${targetUser.tag}\n**Ki:** ${member.user.tag}\n**Indok:** ${reason}`,
               "ERROR",
             );
-          }
-          // --- UNBAN ---
-          else if (commandName === "unban") {
+          } else if (commandName === "unban") {
             await guild.members.unban(
               targetUser.id,
               `Unbannolta: ${member.user.tag} | Indok: ${reason}`,
@@ -232,9 +194,7 @@ export default {
               `🔓 **UNBAN**\n**Kit:** ${targetUser.tag}\n**Ki:** ${member.user.tag}\n**Indok:** ${reason}`,
               "SUCCESS",
             );
-          }
-          // --- KICK ---
-          else if (commandName === "kick") {
+          } else if (commandName === "kick") {
             if (!targetMember.kickable)
               return interaction.reply({
                 content: "❌ Nem tudom kirúgni.",
@@ -251,9 +211,7 @@ export default {
               `👢 **KICK**\n**Kit:** ${targetUser.tag}\n**Ki:** ${member.user.tag}\n**Indok:** ${reason}`,
               "WARN",
             );
-          }
-          // --- TIMEOUT ---
-          else if (commandName === "timeout") {
+          } else if (commandName === "timeout") {
             const minutes = options.getInteger("minutes");
             if (!targetMember.moderatable)
               return interaction.reply({
@@ -274,9 +232,7 @@ export default {
               `⏳ **TIMEOUT**\n**Kit:** ${targetUser.tag}\n**Ki:** ${member.user.tag}\n**Indok:** ${reason}`,
               "WARN",
             );
-          }
-          // --- UNTIMEOUT ---
-          else if (commandName === "untimeout") {
+          } else if (commandName === "untimeout") {
             if (!targetMember.moderatable)
               return interaction.reply({
                 content: "❌ Nem tudom levenni a némítást.",
@@ -296,9 +252,7 @@ export default {
               `✅ **TIMEOUT FELOLDÁSA**\n**Kit:** ${targetUser.tag}\n**Ki:** ${member.user.tag}\n**Indok:** ${reason}`,
               "WARN",
             );
-          }
-          // --- VOICE MODERATION ---
-          else if (commandName === "voice_mute") {
+          } else if (commandName === "voice_mute") {
             if (!targetMember.voice.channel)
               return interaction.reply({
                 content: "❌ A felhasználó nincs hangcsatornában.",

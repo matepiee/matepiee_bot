@@ -17,9 +17,6 @@ const commands = [
     .setName("matepiee_yt")
     .setDescription("YouTube teszt (Admin)"),
   new SlashCommandBuilder()
-    .setName("matepiee_tt")
-    .setDescription("TikTok teszt (Admin)"),
-  new SlashCommandBuilder()
     .setName("matepiee_twitch")
     .setDescription("Twitch teszt (Admin)"),
   new SlashCommandBuilder()
